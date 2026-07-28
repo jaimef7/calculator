@@ -8,6 +8,7 @@ function multiply (a,b){
     return a * b;
 }
 function divide(a,b){
+    if(b== 0) return "not a zero!";
     return a / b;
 }
 
@@ -41,29 +42,34 @@ function updatedisplay(value){
 
     function cleardisplay(){
         display.textContent = "";
-        displaynumber1.textContent = "";
-        displaynumber2.textContent = "";
-
+        displaynumber1 = "";
+        displaynumber2 = "";
+        operand = "";
     }
 
 container.addEventListener('click', (event) => {
     let value =  event.target.textContent;
 
     if (value === '+' || value === '-' || value === '*' || value === '/'){
-        operand = value; 
-    }else if(value == '='){
+        operand = value;
+        updatedisplay(displaynumber1 + " "+ operand); 
+    }else if(value === '='){
+        if(displaynumber1 === "" || displaynumber2 ==="" || operand === ""){
+            return ;
+        }
+
         const result = operate(Number(displaynumber1), Number(displaynumber2), operand);
         updatedisplay(result);
 
         displaynumber1 = result.toString();
         displaynumber2 = "";
         operand = "";
-    }else if (value == 'C'){
+    }else if (value === 'C'){
         cleardisplay()
     }else{
         if(operand !==""){
             displaynumber2 += value;
-            updatedisplay(displaynumber2)
+            updatedisplay( displaynumber1 +" "+ operand+ " " + displaynumber2)
         }else{
             displaynumber1 += value
             updatedisplay(displaynumber1)
